@@ -1,4 +1,10 @@
 
+var loadImage = require('load-image');
+
+/**
+ * Expose Watermark
+ */
+
 module.exports = Watermark;
 
 
@@ -67,9 +73,12 @@ Watermark.prototype.render = function (cb) {
   if (!opts.mark) throw new TypeError('missing watermark');
 
   if ('string' === typeof opts.mark) {
-    var mark = this.mark = new Image;
-    mark.src = opts.mark;
-    mark.onload = bind(this, this.reallyRender, cb);
+    var self = this;
+    loadImage(opts.mark, function (err, img) {
+      if (err) return cb(err);
+      self.makr = img;
+      self.reallyRender(cb);
+    });
   } else {
     this.mark = opts.mark;
     this.reallyRender(cb);
