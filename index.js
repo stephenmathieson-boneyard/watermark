@@ -1,6 +1,4 @@
 
-var bind = require('bind');
-
 module.exports = Watermark;
 
 
