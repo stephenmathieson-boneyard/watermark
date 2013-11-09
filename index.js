@@ -8,6 +8,12 @@ var loadImage = require('load-image');
 exports = module.exports = watermark;
 
 /**
+ * Expose Watermark
+ */
+
+exports.Watermark = Watermark;
+
+/**
  * Most practical usage of `Watermark`
  *
  * @api public
@@ -36,12 +42,6 @@ function watermark(img, mark, x, y, fn) {
       .render(fn);
   }
 }
-
-/**
- * Expose Watermark
- */
-
-exports.Watermark = Watermark;
 
 /**
  * Create a new Watermark instance with `img`
