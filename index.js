@@ -101,11 +101,8 @@ Watermark.prototype.reallyRender = function (cb) {
 
   this.canvas.width = this.img.width || this.img.offsetWidth;
   this.canvas.height = this.img.height || this.img.offsetHeight;
-
   this.ctx.drawImage(this.img, 0, 0);
-
   this.ctx.drawImage(this.mark, x, y);
-
   this.img.src = this.canvas.toDataURL();
   cb(this.img);
 };
