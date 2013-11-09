@@ -6,14 +6,21 @@
     <script src="build/build.js"></script>
   </head>
   <body>
-    <img id="penguin" alt="penguin" src="penguin.jpg">
+    <div id="test"></div>
     <script>
-      var Watermark = require('watermark');
-      var w = new Watermark('#penguin');
-      w.set('mark', 'star.png');
+      var watermark = require('watermark');
+      watermark('/penguin.jpg', '/star.png', 200, 30, function (err, img) {
+        if (err) throw new Error('failed to watermark');
+        document.getElementById('test').appendChild(img);
+      });
+    </script>
+    <script>
+      var Watermark = require('watermark').Watermark;
+      var w = new Watermark('#my-favorite-image');
+      w.set('mark', '/star.png');
       w.set('x', 200);
       w.set('y', 30);
-      w.render(function (img) {
+      w.render(function (err, img) {
         // do stuff
       });
     </script>

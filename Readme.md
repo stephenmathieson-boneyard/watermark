@@ -11,32 +11,47 @@
 
 ## API
 
-### `new Watermark(img, [opts])`
+### `watermark(img, mark, x, y, fn)`
+
+  Shorthand watermark
+
+### `new watermark.Watermark(img, [opts])`
 
   Create a watermark on top of `img`
 
-### `Watermark#set(key, val)`
+#### `Watermark#set(key, val)`
 
   Set `key=val`
 
-### `Watermark#get(key)`
+#### `Watermark#get(key)`
 
   Get `key`
 
-### `Watermark#render([cb])`
+#### `Watermark#render([cb])`
 
   Render the watermark, invoking `cb(img)`
 
 
-## Example Usage
+## Examples
+
+  Simple usage
 
 ```js
-var Watermark = require('watermark');
-var w = new Watermark('#my-favorite-image');
-w.set('mark', './star.png');
+var watermark = require('watermark');
+watermark('/penguin.jpg', '/star.png', 200, 30, function (err, img) {
+  // do stuff
+});
+```
+
+  Using the constructor
+
+```js
+var Watermark = require('watermark').Watermark;
+var w = new Watermark(document.querySelector('img'));
+w.set('mark', '/star.png');
 w.set('x', 200);
 w.set('y', 30);
-w.render(function (img) {
+w.render(function (err, img) {
   // do stuff
 });
 ```

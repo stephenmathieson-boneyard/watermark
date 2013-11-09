@@ -2,29 +2,59 @@
 var loadImage = require('load-image');
 
 /**
+ * Expose watermark
+ */
+
+exports = module.exports = watermark;
+
+/**
+ * Most practical usage of `Watermark`
+ *
+ * @api public
+ * @param {HTMLImageElement|String} img
+ * @param {HTMLImageElement|String} mark
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Function} fn
+ */
+
+function watermark(img, mark, x, y, fn) {
+  if ('string' == typeof img) {
+    loadImage(img, function (err, img) {
+      if (err) return fn(err);
+      render(img);
+    });
+  } else {
+    render(img);
+  }
+
+  function render(img) {
+    new Watermark(img)
+      .set('x', x)
+      .set('y', y)
+      .set('mark', mark)
+      .render(fn);
+  }
+}
+
+/**
  * Expose Watermark
  */
 
-module.exports = Watermark;
-
+exports.Watermark = Watermark;
 
 /**
  * Create a new Watermark instance with `img`
  *
  * @api public
- * @param {HTMLImageElement|String} img
+ * @param {HTMLImageElement} img
  * @param {Object} [opts]
  */
 
 function Watermark(img, opts) {
   if (!img) throw new Error('an image is required');
-
-  this.img = 'string' === typeof img
-    ? document.querySelector(img)
-    : img;
-
+  this.img = img;
   this.opts = opts || {};
-
   var canvas = this.canvas = document.createElement('canvas');
   canvas.style.cssText = 'display:none';
   this.ctx = canvas.getContext('2d');
@@ -76,7 +106,7 @@ Watermark.prototype.render = function (cb) {
     var self = this;
     loadImage(opts.mark, function (err, img) {
       if (err) return cb(err);
-      self.makr = img;
+      self.mark = img;
       self.reallyRender(cb);
     });
   } else {
@@ -95,16 +125,15 @@ Watermark.prototype.render = function (cb) {
  */
 
 Watermark.prototype.reallyRender = function (cb) {
-  var opts = this.opts;
-  var x = opts.x || 10;
-  var y = opts.y || 10;
+  var x = this.get('x') || 10;
+  var y = this.get('y') || 10;
 
   this.canvas.width = this.img.width || this.img.offsetWidth;
   this.canvas.height = this.img.height || this.img.offsetHeight;
   this.ctx.drawImage(this.img, 0, 0);
   this.ctx.drawImage(this.mark, x, y);
   this.img.src = this.canvas.toDataURL();
-  cb(this.img);
+  cb(null, this.img);
 };
 
 /**
