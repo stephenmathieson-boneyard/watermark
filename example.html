@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Watermark example</title>
+    <script src="build/build.js"></script>
+  </head>
+  <body>
+    <img id="penguin" alt="penguin" src="penguin.jpg">
+    <script>
+      var Watermark = require('watermark');
+      var w = new Watermark('#penguin');
+      w.set('mark', 'star.png');
+      w.set('x', 200);
+      w.set('y', 30);
+      w.render(function (img) {
+        // do stuff
+      });
+    </script>
+  </body>
+</html>

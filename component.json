@@ -1,0 +1,12 @@
+{
+  "name": "watermark",
+  "repo": "stephenmathieson/watermark",
+  "description": "Watermark your images like what",
+  "version": "0.0.0",
+  "keywords": [ "watermark", "images", "canvas" ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ]
+}
